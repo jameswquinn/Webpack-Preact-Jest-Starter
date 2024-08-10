@@ -2,6 +2,8 @@
 
 This is a production-ready starter template for building Preact applications with Webpack and Jest. It includes image optimization for responsive designs and is configured for easy deployment to Vercel.
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2F%5BYOUR_GITHUB_USERNAME%5D%2Fwebpack-preact-jest-starter)
+
 ## Features
 
 - Preact for efficient UI rendering
@@ -21,7 +23,38 @@ This is a production-ready starter template for building Preact applications wit
 
 ## Deployment
 
-This project is configured for easy deployment to Vercel. You can deploy it directly from GitHub or use the Vercel CLI.
+### Option 1: One-Click Deploy with Vercel
+
+Click the "Deploy with Vercel" button above to create a new GitHub repo, clone this project, and deploy to Vercel in one click.
+
+### Option 2: Manual Deployment
+
+1. Push your code to a GitHub repository.
+2. Import your project into Vercel.
+3. Vercel will detect that you have a `vercel.json` file and use the appropriate settings.
+
+### Option 3: Vercel CLI
+
+1. Install Vercel CLI: `npm i -g vercel`
+2. Run `vercel` in your project directory to deploy.
+
+## Development
+
+- Run `npm start` to start the development server.
+- The app will be available at `http://localhost:3000`.
+
+## Testing
+
+- Run `npm test` to run the Jest test suite.
+
+## Building for Production
+
+- Run `npm run build` to create a production build.
+- The built files will be in the `dist` directory.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
