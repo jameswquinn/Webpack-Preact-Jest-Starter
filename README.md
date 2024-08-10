@@ -1,5 +1,3 @@
-Certainly! Here's a preview of how your README.md will look when rendered on GitHub:
-
 # Webpack Preact Jest Starter
 
 This is a production-ready starter template for building Preact applications with Webpack and Jest. It includes image optimization for responsive designs, Progressive Web App (PWA) features, and is configured for easy deployment to Vercel and development on CodeSandbox.io.
