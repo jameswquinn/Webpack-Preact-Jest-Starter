@@ -102,6 +102,3 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-This README provides a comprehensive overview of your project, including its features, setup instructions, development workflows (including CodeSandbox.io specifics), image optimization details, PWA features, deployment options, and contribution guidelines. The "Deploy with Vercel" button is prominently displayed at the top, making it easy for users to quickly deploy the project.
-
-Is there anything you'd like me to change or add to this README?
