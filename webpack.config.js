@@ -28,7 +28,7 @@ module.exports = (env, argv) => {
           use: {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env', ['@babel/preset-react', { pragma: 'h' }]],
+              presets: ['@babel/preset-env', ['@babel/preset-react', { pragma: 'h', pragmaFrag: 'Fragment' }]],
             },
           },
         },
@@ -68,10 +68,23 @@ module.exports = (env, argv) => {
                     const sizes = [300, 600, 1200, 2000];
                     const results = await processImage(filepath, outputPath, sizes);
                     
+                    const webpResults = results.filter(r => r.format === 'webp');
+                    const fallbackResults = results.filter(r => r.format !== 'webp');
+                    
+                    const webpSrcSet = webpResults
+                      .map(r => `${r.src} ${r.width}w`)
+                      .join(', ');
+                    const fallbackSrcSet = fallbackResults
+                      .map(r => `${r.src} ${r.width}w`)
+                      .join(', ');
+
                     return {
-                      src: results[0].src,
-                      srcSet: results.map(r => `${r.src} ${r.width}w`).join(', '),
-                      placeholder: results[0].placeholder
+                      src: webpResults[0].src,
+                      srcSet: webpSrcSet,
+                      fallbackSrc: fallbackResults[0].src,
+                      fallbackSrcSet: fallbackSrcSet,
+                      placeholder: results[0].placeholder,
+                      isTransparent: results[0].isTransparent
                     };
                   }
                 ]
