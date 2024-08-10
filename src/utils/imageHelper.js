@@ -27,13 +27,18 @@ async function processImage(imagePath, outputPath, sizes) {
       
       await sharp(imagePath)
         .resize(size)
-        [format]({ quality: 80 })
+        [format]({ 
+          quality: 80,
+          ...(format === 'webp' && isTransparent ? { alphaQuality: 100 } : {}),
+          ...(format === 'png' ? { compressionLevel: 9 } : {})
+        })
         .toFile(outputFilePath);
       
       results.push({
         src: outputFilename,
         width: size,
-        format: format
+        format: format,
+        isTransparent: isTransparent
       });
     }
   }
