@@ -40,7 +40,7 @@
     "webpack-dev-server": "^4.0.0",
     "glob": "^7.2.0",
     "webpack-pwa-manifest": "^4.3.0",
-    "favicons-webpack-plugin": "^5.0.2",
+    "favicons-webpack-plugin": "^6.0.0",
     "workbox-webpack-plugin": "^6.5.4",
     "webpack-bundle-analyzer": "^4.5.0"
   }
