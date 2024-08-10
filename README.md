@@ -1,6 +1,8 @@
+Certainly! Here's a preview of how your README.md will look when rendered on GitHub:
+
 # Webpack Preact Jest Starter
 
-This is a production-ready starter template for building Preact applications with Webpack and Jest. It includes image optimization for responsive designs, Progressive Web App (PWA) features, and is configured for easy deployment to Vercel.
+This is a production-ready starter template for building Preact applications with Webpack and Jest. It includes image optimization for responsive designs, Progressive Web App (PWA) features, and is configured for easy deployment to Vercel and development on CodeSandbox.io.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjameswquinn%2Fwebpack-preact-jest-starter)
 
@@ -10,10 +12,12 @@ This is a production-ready starter template for building Preact applications wit
 - Webpack for bundling and asset management
 - Jest for testing
 - Image optimization with responsive sizes and formats (WebP, JPEG, PNG)
+- Intelligent handling of transparent PNG images
 - CSS optimization including CSS Modules, PostCSS, and Critical CSS extraction
 - Progressive Web App (PWA) features with offline support
 - Automatic favicon generation
 - Vercel-ready configuration
+- CodeSandbox.io compatible
 
 ## Quick Start
 
@@ -22,6 +26,35 @@ This is a production-ready starter template for building Preact applications wit
 3. Start development server: `npm start`
 4. Build for production: `npm run build`
 5. Run tests: `npm test`
+
+## Development on CodeSandbox.io
+
+This project is configured to work seamlessly on CodeSandbox.io. The webpack dev server is set up to allow for external preview.
+
+To develop on CodeSandbox.io:
+1. Import this project into CodeSandbox.io
+2. The development server will start automatically
+3. You can use the external preview feature without any additional configuration
+
+## Image Optimization
+
+This starter includes advanced image optimization:
+- Generates WebP versions of images with JPEG/PNG fallbacks
+- Creates multiple sizes for responsive loading
+- Intelligently handles transparent PNG images
+- Generates image placeholders for lazy loading
+
+Usage in components:
+
+```jsx
+import { h } from 'preact';
+import Image from './components/Image';
+import myImage from './assets/my-image.png';
+
+function MyComponent() {
+  return <Image src={myImage} alt="My Image" />;
+}
+```
 
 ## Progressive Web App
 
@@ -34,7 +67,7 @@ This starter includes PWA features:
 
 ### Option 1: One-Click Deploy with Vercel
 
-Click the "Deploy with Vercel" button above to create a new GitHub repo, clone this project, and deploy to Vercel in one click.
+Click the "Deploy with Vercel" button at the top of this README to create a new GitHub repo, clone this project, and deploy to Vercel in one click.
 
 ### Option 2: Manual Deployment
 
@@ -68,3 +101,9 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+This README provides a comprehensive overview of your project, including its features, setup instructions, development workflows (including CodeSandbox.io specifics), image optimization details, PWA features, deployment options, and contribution guidelines. The "Deploy with Vercel" button is prominently displayed at the top, making it easy for users to quickly deploy the project.
+
+Is there anything you'd like me to change or add to this README?
