@@ -21,6 +21,8 @@ flowchart TD
     N --> O[Process JavaScript]
     N --> P[Process CSS]
     N --> Q[Process Images]
+    N --> R[Generate PWA Assets]
+    N --> S[Generate Favicons]
 
     O --> O1[Transpile with Babel]
     O1 --> O2[Minify JS]
@@ -46,30 +48,40 @@ flowchart TD
     Q3 --> Q4
     Q4 --> Q5[Generate Placeholder]
 
-    O2 --> R[Output: dist/js]
-    P12 --> S[Output: dist/css]
-    Q5 --> T[Output: dist/images]
+    R --> R1[Generate Web App Manifest]
+    R1 --> R2[Create Service Worker]
 
-    R --> U[Final Build Output]
-    S --> U
-    T --> U
+    S --> S1[Generate Favicons for Various Devices]
 
-    U --> V[Generate HTML]
-    V --> W[Inject Critical CSS]
-    W --> X[Add Async CSS Loading Script]
+    O2 --> T[Output: dist/js]
+    P12 --> U[Output: dist/css]
+    Q5 --> V[Output: dist/images]
+    R2 --> W[Output: dist/service-worker.js]
+    S1 --> X[Output: dist/favicon assets]
 
-    X --> Y[Vercel Deploys to CDN]
-    Y --> Z[Live Website]
+    T --> Y[Final Build Output]
+    U --> Y
+    V --> Y
+    W --> Y
+    X --> Y
 
-    I --> AA[Run npm test]
-    AA --> AB[Jest Runs Tests]
-    AB --> AC{All Tests Pass?}
-    AC -->|Yes| AD[Commit Changes]
-    AC -->|No| AE[Fix Failing Tests]
-    AE --> AA
+    Y --> Z[Generate HTML]
+    Z --> AA[Inject Critical CSS]
+    AA --> AB[Add Async CSS Loading Script]
+    AB --> AC[Add Service Worker Registration]
 
-    AD --> J
+    AC --> AD[Vercel Deploys to CDN]
+    AD --> AE[Live Website]
 
-    Z --> AF[End]
+    I --> AF[Run npm test]
+    AF --> AG[Jest Runs Tests]
+    AG --> AH{All Tests Pass?}
+    AH -->|Yes| AI[Commit Changes]
+    AH -->|No| AJ[Fix Failing Tests]
+    AJ --> AF
+
+    AI --> J
+
+    AE --> AK[End]
 
 ```
