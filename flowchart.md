@@ -41,12 +41,16 @@ flowchart TD
     P6 --> P12[CSS Processing Complete]
     P11 --> P12
 
-    Q --> Q1{Image has Transparent Background?}
-    Q1 -->|Yes| Q2[Generate WebP and PNG]
-    Q1 -->|No| Q3[Generate WebP and JPEG]
-    Q2 --> Q4[Create Multiple Sizes]
-    Q3 --> Q4
-    Q4 --> Q5[Generate Placeholder]
+    Q --> Q1{Check Image Transparency}
+    Q1 -->|Transparent| Q2[Generate WebP with Alpha]
+    Q1 -->|Not Transparent| Q3[Generate WebP]
+    Q2 --> Q4[Generate PNG]
+    Q3 --> Q5[Generate JPEG]
+    Q4 --> Q6[Create Multiple Sizes]
+    Q5 --> Q6
+    Q6 --> Q7[Generate Placeholder]
+    Q7 --> Q8[Prioritize WebP in srcSet]
+    Q8 --> Q9[Prepare Fallback Formats PNG/JPEG]
 
     R --> R1[Generate Web App Manifest]
     R1 --> R2[Create Service Worker]
@@ -55,7 +59,7 @@ flowchart TD
 
     O2 --> T[Output: dist/js]
     P12 --> U[Output: dist/css]
-    Q5 --> V[Output: dist/images]
+    Q9 --> V[Output: dist/images]
     R2 --> W[Output: dist/service-worker.js]
     S1 --> X[Output: dist/favicon assets]
 
