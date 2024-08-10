@@ -1,0 +1,32 @@
+webpack-preact-jest-starter/
+│
+├── src/
+│   ├── assets/
+│   │   └── logo.png
+│   ├── components/
+│   │   ├── Button.js
+│   │   └── Button.css
+│   ├── utils/
+│   │   └── imageHelper.js
+│   ├── App.js
+│   ├── index.js
+│   └── index.html
+│
+├── __tests__/
+│   └── App.test.js
+│
+├── __mocks__/
+│   └── fileMock.js
+│
+├── public/
+│   └── (static assets, if any)
+│
+├── webpack.config.js
+├── babel.config.js
+├── jest.config.js
+├── postcss.config.js
+├── .browserslistrc
+├── package.json
+├── vercel.json
+├── .gitignore
+└── README.md
