@@ -2,7 +2,7 @@
 
 This is a production-ready starter template for building Preact applications with Webpack and Jest. It includes image optimization for responsive designs and is configured for easy deployment to Vercel.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2F%5BYOUR_GITHUB_USERNAME%5D%2Fwebpack-preact-jest-starter)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2F%5Bjameswquinn%5D%2Fwebpack-preact-jest-starter)
 
 ## Features
 
