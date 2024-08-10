@@ -16,6 +16,7 @@ This is a production-ready starter template for building Preact applications wit
 - Automatic favicon generation
 - Vercel-ready configuration
 - CodeSandbox.io compatible
+- Bundle analysis with Webpack Bundle Analyzer
 
 ## Quick Start
 
@@ -92,6 +93,18 @@ Click the "Deploy with Vercel" button at the top of this README to create a new 
 - Run `npm run build` to create a production build.
 - The built files will be in the `dist` directory.
 
+## Bundle Analysis
+
+This project includes Webpack Bundle Analyzer for visualizing the size of webpack output files.
+
+To generate a static report:
+- Run a production build: `npm run build`
+- Open `dist/bundle-report.html` in a web browser
+
+To start an interactive analyzer server:
+- Run `npm run analyze`
+- The analyzer will start a server and automatically open in your default web browser
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -101,4 +114,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 This project is open source and available under the [MIT License](LICENSE).
 
 ---
-
