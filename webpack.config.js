@@ -7,11 +7,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { processImage } = require('./src/utils/imageHelper');
 const glob = require('glob');
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
+  const isAnalyze = env.analyze;
 
   return {
     entry: './src/index.js',
@@ -162,6 +164,11 @@ module.exports = (env, argv) => {
       new WorkboxWebpackPlugin.GenerateSW({
         clientsClaim: true,
         skipWaiting: true,
+      }),
+      isProduction && new BundleAnalyzerPlugin({
+        analyzerMode: isAnalyze ? 'server' : 'static',
+        reportFilename: 'bundle-report.html',
+        openAnalyzer: isAnalyze,
       }),
     ].filter(Boolean),
     optimization: {
