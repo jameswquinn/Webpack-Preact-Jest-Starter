@@ -1,6 +1,6 @@
 # Webpack Preact Jest Starter
 
-This is a production-ready starter template for building Preact applications with Webpack and Jest. It includes image optimization for responsive designs and is configured for easy deployment to Vercel.
+This is a production-ready starter template for building Preact applications with Webpack and Jest. It includes image optimization for responsive designs, Progressive Web App (PWA) features, and is configured for easy deployment to Vercel.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjameswquinn%2Fwebpack-preact-jest-starter)
 
@@ -11,6 +11,8 @@ This is a production-ready starter template for building Preact applications wit
 - Jest for testing
 - Image optimization with responsive sizes and formats (WebP, JPEG, PNG)
 - CSS optimization including CSS Modules, PostCSS, and Critical CSS extraction
+- Progressive Web App (PWA) features with offline support
+- Automatic favicon generation
 - Vercel-ready configuration
 
 ## Quick Start
@@ -20,6 +22,13 @@ This is a production-ready starter template for building Preact applications wit
 3. Start development server: `npm start`
 4. Build for production: `npm run build`
 5. Run tests: `npm test`
+
+## Progressive Web App
+
+This starter includes PWA features:
+- Service Worker for offline support
+- Web App Manifest for installability
+- Favicon generation for various devices
 
 ## Deployment
 
