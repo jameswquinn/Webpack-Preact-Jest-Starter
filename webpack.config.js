@@ -4,6 +4,9 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const PurgecssPlugin = require('purgecss-webpack-plugin');
 const CriticalCssPlugin = require('critical-css-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const { processImage } = require('./src/utils/imageHelper');
 const glob = require('glob');
 
@@ -101,6 +104,51 @@ module.exports = (env, argv) => {
         penthouse: {
           blockJSRequests: false,
         },
+      }),
+      new FaviconsWebpackPlugin({
+        logo: './src/assets/logo.png',
+        mode: 'webapp',
+        devMode: 'webapp',
+        favicons: {
+          appName: 'Webpack Preact Jest Starter',
+          appDescription: 'A starter template for Preact apps',
+          developerName: 'Your Name',
+          developerURL: null,
+          background: '#ffffff',
+          theme_color: '#ffffff',
+          icons: {
+            coast: false,
+            yandex: false
+          }
+        }
+      }),
+      new WebpackPwaManifest({
+        name: 'Webpack Preact Jest Starter',
+        short_name: 'Preact Starter',
+        description: 'A starter template for Preact apps',
+        background_color: '#ffffff',
+        theme_color: '#ffffff',
+        inject: true,
+        ios: true,
+        icons: [
+          {
+            src: path.resolve('src/assets/logo.png'),
+            sizes: [96, 128, 192, 256, 384, 512]
+          },
+          {
+            src: path.resolve('src/assets/logo.png'),
+            size: '1024x1024'
+          },
+          {
+            src: path.resolve('src/assets/logo.png'),
+            size: '1024x1024',
+            purpose: 'maskable'
+          }
+        ]
+      }),
+      new WorkboxWebpackPlugin.GenerateSW({
+        clientsClaim: true,
+        skipWaiting: true,
       }),
     ].filter(Boolean),
     optimization: {
