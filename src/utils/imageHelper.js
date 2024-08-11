@@ -1,58 +1,26 @@
 const sharp = require('sharp');
-const path = require('path');
 
-async function hasTransparentBackground(imagePath) {
-  try {
-    const image = sharp(imagePath);
-    const stats = await image.stats();
-    return stats.channels[3]?.min !== stats.channels[3]?.max;
-  } catch (error) {
-    console.error('Error checking image transparency:', error);
-    return false;
-  }
+async function processImage(content) {
+  const metadata = await sharp(content).metadata();
+  const isTransparent = metadata.hasAlpha;
+
+  const webp = await sharp(content)
+    .webp({ quality: 80 })
+    .toBuffer();
+
+  const fallback = isTransparent
+    ? await sharp(content)
+        .png({ compressionLevel: 9 })
+        .toBuffer()
+    : await sharp(content)
+        .jpeg({ quality: 80 })
+        .toBuffer();
+
+  return {
+    webp,
+    fallback,
+    isTransparent,
+  };
 }
 
-async function processImage(imagePath, outputPath, sizes) {
-  const isTransparent = await hasTransparentBackground(imagePath);
-  const basename = path.basename(imagePath, path.extname(imagePath));
-  
-  const formats = isTransparent ? ['webp', 'png'] : ['webp', 'jpg'];
-  
-  const results = [];
-
-  for (const format of formats) {
-    for (const size of sizes) {
-      const outputFilename = `${basename}-${size}.${format}`;
-      const outputFilePath = path.join(outputPath, outputFilename);
-      
-      await sharp(imagePath)
-        .resize(size)
-        [format]({ 
-          quality: 80,
-          ...(format === 'webp' && isTransparent ? { alphaQuality: 100 } : {}),
-          ...(format === 'png' ? { compressionLevel: 9 } : {})
-        })
-        .toFile(outputFilePath);
-      
-      results.push({
-        src: outputFilename,
-        width: size,
-        format: format,
-        isTransparent: isTransparent
-      });
-    }
-  }
-
-  // Generate placeholder
-  const placeholder = await sharp(imagePath)
-    .resize(20)
-    .blur()
-    .toBuffer()
-    .then(buffer => `data:image/png;base64,${buffer.toString('base64')}`);
-
-  results[0].placeholder = placeholder;
-
-  return results;
-}
-
-module.exports = { processImage, hasTransparentBackground };
+module.exports = { processImage };
