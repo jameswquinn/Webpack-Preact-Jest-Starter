@@ -27,8 +27,7 @@ module.exports = (env, argv) => {
             loader: 'babel-loader',
             options: {
               cacheDirectory: true,
-              cacheCompression: false,
-              compact: false
+              cacheCompression: false
             }
           }
         },
@@ -59,25 +58,6 @@ module.exports = (env, argv) => {
               options: {
                 name: 'images/[name].[hash:8].[ext]',
               },
-            },
-            {
-              loader: 'image-webpack-loader',
-              options: {
-                mozjpeg: {
-                  progressive: true,
-                  quality: 65
-                },
-                optipng: {
-                  enabled: false,
-                },
-                pngquant: {
-                  quality: [0.65, 0.90],
-                  speed: 4
-                },
-                webp: {
-                  quality: 75
-                }
-              }
             },
             {
               loader: 'responsive-loader',
