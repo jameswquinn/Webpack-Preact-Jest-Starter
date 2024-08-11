@@ -27,7 +27,8 @@ module.exports = (env, argv) => {
             loader: 'babel-loader',
             options: {
               cacheDirectory: true,
-              cacheCompression: false
+              cacheCompression: false,
+              compact: false
             }
           }
         },
