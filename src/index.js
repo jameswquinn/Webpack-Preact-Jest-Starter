@@ -1,6 +1,8 @@
 import { h, render } from 'preact';
 import App from './App';
-import './styles.css';
+
+// Remove this line if you don't have a styles.css file
+// import './styles.css';
 
 render(<App />, document.body);
 
