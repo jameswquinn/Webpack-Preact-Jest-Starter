@@ -36,6 +36,10 @@
     "webpack-dev-server": "^4.0.0",
     "webpack-pwa-manifest": "^4.3.0",
     "favicons-webpack-plugin": "^6.0.0",
-    "workbox-webpack-plugin": "^6.5.4"
+    "workbox-webpack-plugin": "^6.5.4",
+    "file-loader": "^6.2.0",
+    "image-webpack-loader": "^8.1.0",
+    "responsive-loader": "^3.1.2",
+    "sharp": "^0.32.1"
   }
 }
