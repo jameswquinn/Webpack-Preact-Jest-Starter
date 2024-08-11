@@ -18,15 +18,16 @@ module.exports = (env, argv) => {
     },
     module: {
       rules: [
-        {
+   {
           test: /\.jsx?$/,
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env', ['@babel/preset-react', { pragma: 'h', pragmaFrag: 'Fragment' }]],
-            },
-          },
+              cacheDirectory: true,
+              cacheCompression: false
+            }
+          }
         },
         {
           test: /\.css$/,
