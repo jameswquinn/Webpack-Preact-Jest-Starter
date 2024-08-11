@@ -2,7 +2,7 @@ import { h } from 'preact';
 import Image from './components/Image';
 import exampleImage from '../public/example.png';
 
-function MyComponent() {
+function App() {
   return (
     <div>
       <h1>My Component</h1>
@@ -11,4 +11,4 @@ function MyComponent() {
   );
 }
 
-export default MyComponent;
+export default App;
