@@ -18,7 +18,7 @@ module.exports = (env, argv) => {
     },
     module: {
       rules: [
-   {
+        {
           test: /\.jsx?$/,
           exclude: /node_modules/,
           use: {
@@ -97,6 +97,7 @@ module.exports = (env, argv) => {
         'react': 'preact/compat',
         'react-dom': 'preact/compat',
       },
+      extensions: ['.js', '.jsx'],
     },
   };
 };
