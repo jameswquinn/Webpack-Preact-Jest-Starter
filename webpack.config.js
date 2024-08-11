@@ -7,7 +7,6 @@ const CopyPlugin = require('copy-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
-const { processImage } = require('./src/utils/imageHelper');
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
@@ -40,6 +39,47 @@ module.exports = (env, argv) => {
             'postcss-loader'
           ],
         },
+        {
+          test: /\.(png|jpe?g|webp)$/i,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: 'images/[name].[hash:8].[ext]',
+              },
+            },
+            {
+              loader: 'image-webpack-loader',
+              options: {
+                mozjpeg: {
+                  progressive: true,
+                  quality: 65
+                },
+                optipng: {
+                  enabled: false,
+                },
+                pngquant: {
+                  quality: [0.65, 0.90],
+                  speed: 4
+                },
+                webp: {
+                  quality: 75
+                }
+              }
+            },
+            {
+              loader: 'responsive-loader',
+              options: {
+                adapter: require('responsive-loader/sharp'),
+                sizes: [300, 600, 1200, 2000],
+                placeholder: true,
+                placeholderSize: 20,
+                name: 'images/[name]-[width].[ext]',
+                format: 'webp',
+              }
+            }
+          ]
+        },
       ],
     },
     plugins: [
@@ -55,21 +95,7 @@ module.exports = (env, argv) => {
             from: 'public',
             to: 'assets',
             globOptions: {
-              ignore: ['**/*.png'],
-            },
-          },
-          {
-            from: 'public',
-            to: 'assets',
-            globOptions: {
-              ignore: ['**/*.!(png)'],
-            },
-            transform: async (content, path) => {
-              if (path.endsWith('.png')) {
-                const result = await processImage(content);
-                return result.webp;
-              }
-              return content;
+              ignore: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.webp'],
             },
           },
         ],
