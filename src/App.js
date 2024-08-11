@@ -1,11 +1,12 @@
 import { h } from 'preact';
-import { Button } from './components/Button';
+import Image from './components/Image';
+import exampleImage from '../assets/example.png';
 
 function App() {
   return (
     <div>
       <h1>Hello, Preact!</h1>
-      <Button onClick={() => alert('Button clicked!')}>Click me</Button>
+      <Image src={exampleImage} alt="Example" />
     </div>
   );
 }
