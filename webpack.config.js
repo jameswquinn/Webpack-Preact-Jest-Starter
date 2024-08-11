@@ -4,6 +4,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
@@ -20,27 +23,54 @@ module.exports = (env, argv) => {
         {
           test: /\.jsx?$/,
           exclude: /node_modules/,
-          use: 'babel-loader'
+          use: {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+              cacheCompression: false
+            }
+          }
         },
         {
           test: /\.css$/,
           use: [
             isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
-            'css-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                modules: {
+                  auto: true,
+                  localIdentName: isProduction
+                    ? '[hash:base64]'
+                    : '[name]__[local]--[hash:base64:5]',
+                },
+                importLoaders: 1,
+              },
+            },
             'postcss-loader'
           ],
         },
         {
-          test: /\.(png|jpe?g|gif|webp)$/i,
+          test: /\.(png|jpe?g|webp)$/i,
           use: [
             {
               loader: 'file-loader',
               options: {
-                name: '[name].[hash:8].[ext]',
-                outputPath: 'images',
+                name: 'images/[name].[hash:8].[ext]',
               },
             },
-          ],
+            {
+              loader: 'responsive-loader',
+              options: {
+                adapter: require('responsive-loader/sharp'),
+                sizes: [300, 600, 1200, 2000],
+                placeholder: true,
+                placeholderSize: 20,
+                name: 'images/[name]-[width].[ext]',
+                format: 'webp',
+              }
+            }
+          ]
         },
       ],
     },
@@ -53,8 +83,36 @@ module.exports = (env, argv) => {
       }),
       new CopyPlugin({
         patterns: [
-          { from: 'public', to: '' },
+          {
+            from: 'public',
+            to: 'assets',
+            globOptions: {
+              ignore: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.webp'],
+            },
+          },
         ],
+      }),
+      new WebpackPwaManifest({
+        name: 'My Preact App',
+        short_name: 'PreactApp',
+        description: 'My awesome Preact app',
+        background_color: '#ffffff',
+        theme_color: '#000000',
+        icons: [
+          {
+            src: path.resolve('src/assets/icon.png'),
+            sizes: [96, 128, 192, 256, 384, 512]
+          },
+        ]
+      }),
+      new FaviconsWebpackPlugin({
+        logo: './src/assets/icon.png',
+        mode: 'webapp',
+        devMode: 'webapp',
+      }),
+      new WorkboxWebpackPlugin.GenerateSW({
+        clientsClaim: true,
+        skipWaiting: true,
       }),
     ].filter(Boolean),
     optimization: {
@@ -62,6 +120,20 @@ module.exports = (env, argv) => {
         new TerserPlugin(),
         new CssMinimizerPlugin(),
       ],
+    },
+    devServer: {
+      static: {
+        directory: path.join(__dirname, 'public'),
+      },
+      compress: true,
+      port: 3000,
+      hot: true,
+      allowedHosts: 'all',
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+        "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+      },
     },
     resolve: {
       alias: {
