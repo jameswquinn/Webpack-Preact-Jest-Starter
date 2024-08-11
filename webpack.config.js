@@ -35,7 +35,18 @@ module.exports = (env, argv) => {
           test: /\.css$/,
           use: [
             isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
-            'css-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                modules: {
+                  auto: true,
+                  localIdentName: isProduction
+                    ? '[hash:base64]'
+                    : '[name]__[local]--[hash:base64:5]',
+                },
+                importLoaders: 1,
+              },
+            },
             'postcss-loader'
           ],
         },
