@@ -4,6 +4,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const { processImage } = require('./src/utils/imageHelper');
 
 module.exports = (env, argv) => {
@@ -64,12 +67,34 @@ module.exports = (env, argv) => {
             transform: async (content, path) => {
               if (path.endsWith('.png')) {
                 const result = await processImage(content);
-                return result.webp; // Return WebP version as primary
+                return result.webp;
               }
               return content;
             },
           },
         ],
+      }),
+      new WebpackPwaManifest({
+        name: 'My Preact App',
+        short_name: 'PreactApp',
+        description: 'My awesome Preact app',
+        background_color: '#ffffff',
+        theme_color: '#000000',
+        icons: [
+          {
+            src: path.resolve('src/assets/icon.png'),
+            sizes: [96, 128, 192, 256, 384, 512]
+          },
+        ]
+      }),
+      new FaviconsWebpackPlugin({
+        logo: './src/assets/icon.png',
+        mode: 'webapp',
+        devMode: 'webapp',
+      }),
+      new WorkboxWebpackPlugin.GenerateSW({
+        clientsClaim: true,
+        skipWaiting: true,
       }),
     ].filter(Boolean),
     optimization: {
