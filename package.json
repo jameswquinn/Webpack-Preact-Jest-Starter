@@ -8,7 +8,7 @@
     "analyze": "webpack --mode production --env analyze"
   },
   "dependencies": {
-    "preact": "^10.5.15"
+    "preact": "^10.23.1"
   },
   "devDependencies": {
     "@babel/core": "^7.22.5",
