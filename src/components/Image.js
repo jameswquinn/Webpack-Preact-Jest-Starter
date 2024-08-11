@@ -3,7 +3,8 @@ import { h } from 'preact';
 function Image({ src, alt, className }) {
   return (
     <img 
-      src={src}
+      srcSet={`${src.srcSet}`}
+      src={src.fallbackSrc}
       alt={alt}
       className={className}
     />
