@@ -1,7 +1,7 @@
 import { h, render } from 'preact';
 import App from './App';
 
-render(<App />, document.getElementById('root'));
+render(<App />, document.getElementById('app'));
 
 // Register service worker
 if ('serviceWorker' in navigator) {
