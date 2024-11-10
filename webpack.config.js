@@ -10,7 +10,7 @@ const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const glob = require('glob');
 const TerserPlugin = require('terser-webpack-plugin');
-const { processImage } = require('./src/utils/imageHelper');
+
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
