@@ -110,7 +110,7 @@ module.exports = (env, argv) => {
         height: 565,
         penthouse: {
         blockJSRequests: false,
-      },
+      }),
       new FaviconsWebpackPlugin({
         logo: './src/assets/logo.png',
         mode: 'webapp',
