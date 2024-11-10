@@ -11,7 +11,7 @@ This is a production-ready starter template for building Preact applications wit
 - Jest for testing
 - Image optimization with responsive sizes and formats (WebP, JPEG, PNG)
 - Intelligent handling of transparent PNG images
-- CSS optimization including CSS Modules, PostCSS, and Critical CSS extraction
+- CSS optimization including CSS Modules and PostCSS.
 - Progressive Web App (PWA) features with offline support
 - Automatic favicon generation
 - Vercel-ready configuration
