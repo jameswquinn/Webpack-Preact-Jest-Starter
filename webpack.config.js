@@ -100,7 +100,7 @@ module.exports = (env, argv) => {
       isProduction && new PurgecssPlugin({
         paths: glob.sync(path.join(__dirname, 'src/**/*.{html,js,jsx}'), { nodir: true }),
       }),
-        isProduction && new CriticalCssPlugin({
+      isProduction && new CriticalCssPlugin({
         base: path.resolve(__dirname, 'dist'),
         src: 'index.html',
         target: 'index.html',
@@ -109,7 +109,8 @@ module.exports = (env, argv) => {
         width: 375,
         height: 565,
         penthouse: {
-        blockJSRequests: false,
+          blockJSRequests: false,
+        },
       }),
       new FaviconsWebpackPlugin({
         logo: './src/assets/logo.png',
