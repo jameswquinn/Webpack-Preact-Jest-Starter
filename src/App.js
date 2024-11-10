@@ -1,14 +1,9 @@
 import { h } from 'preact';
-import Image from './components/Image';
-import exampleImage from '../public/example.png';
 
-function App() {
-  return (
-    <div>
-      <h1>My Component</h1>
-      <Image src={exampleImage} alt="Example" />
-    </div>
-  );
-}
+const App = () => (
+  <div>
+    <h1>Hello, World!</h1>
+  </div>
+);
 
 export default App;
