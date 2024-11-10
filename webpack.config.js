@@ -8,8 +8,9 @@ const WebpackPwaManifest = require('webpack-pwa-manifest');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const { processImage } = require('./src/utils/imageHelper');
 const glob = require('glob');
+const TerserPlugin = require('terser-webpack-plugin');
+const { processImage } = require('./src/utils/imageHelper');
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
@@ -20,7 +21,7 @@ module.exports = (env, argv) => {
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: '[name].[contenthash].js',
-      publicPath: '/'
+      publicPath: '/',
     },
     module: {
       rules: [
@@ -62,38 +63,29 @@ module.exports = (env, argv) => {
               },
             },
             {
-              loader: 'img-loader',
+              loader: 'image-webpack-loader',
               options: {
-                plugins: [
-                  async function(content, filepath) {
-                    const outputPath = path.join(__dirname, 'dist', 'images');
-                    const sizes = [300, 600, 1200, 2000];
-                    const results = await processImage(filepath, outputPath, sizes);
-                    
-                    const webpResults = results.filter(r => r.format === 'webp');
-                    const fallbackResults = results.filter(r => r.format !== 'webp');
-                    
-                    const webpSrcSet = webpResults
-                      .map(r => `${r.src} ${r.width}w`)
-                      .join(', ');
-                    const fallbackSrcSet = fallbackResults
-                      .map(r => `${r.src} ${r.width}w`)
-                      .join(', ');
-
-                    return {
-                      src: webpResults[0].src,
-                      srcSet: webpSrcSet,
-                      fallbackSrc: fallbackResults[0].src,
-                      fallbackSrcSet: fallbackSrcSet,
-                      placeholder: results[0].placeholder,
-                      isTransparent: results[0].isTransparent
-                    };
-                  }
-                ]
-              }
-            }
-          ]
-        }
+                mozjpeg: {
+                  progressive: true,
+                  quality: 65,
+                },
+                optipng: {
+                  enabled: true,
+                },
+                pngquant: {
+                  quality: [0.65, 0.90],
+                  speed: 4,
+                },
+                gifsicle: {
+                  interlaced: false,
+                },
+                webp: {
+                  quality: 75,
+                },
+              },
+            },
+          ],
+        },
       ],
     },
     plugins: [
@@ -106,7 +98,7 @@ module.exports = (env, argv) => {
         chunkFilename: 'css/[name].[contenthash:8].chunk.css',
       }),
       isProduction && new PurgecssPlugin({
-        paths: glob.sync(`${path.join(__dirname, 'src')}/**/*`, { nodir: true }),
+        paths: glob.sync(path.join(__dirname, 'src/**/*.{html,js,jsx}'), { nodir: true }),
       }),
       isProduction && new CriticalCssPlugin({
         base: path.resolve(__dirname, 'dist'),
@@ -133,9 +125,9 @@ module.exports = (env, argv) => {
           theme_color: '#ffffff',
           icons: {
             coast: false,
-            yandex: false
-          }
-        }
+            yandex: false,
+          },
+        },
       }),
       new WebpackPwaManifest({
         name: 'Webpack Preact Jest Starter',
@@ -148,18 +140,18 @@ module.exports = (env, argv) => {
         icons: [
           {
             src: path.resolve('src/assets/logo.png'),
-            sizes: [96, 128, 192, 256, 384, 512]
-          },
-          {
-            src: path.resolve('src/assets/logo.png'),
-            size: '1024x1024'
+            sizes: [96, 128, 192, 256, 384, 512],
           },
           {
             src: path.resolve('src/assets/logo.png'),
             size: '1024x1024',
-            purpose: 'maskable'
-          }
-        ]
+          },
+          {
+            src: path.resolve('src/assets/logo.png'),
+            size: '1024x1024',
+            purpose: 'maskable',
+          },
+        ],
       }),
       new WorkboxWebpackPlugin.GenerateSW({
         clientsClaim: true,
@@ -175,12 +167,11 @@ module.exports = (env, argv) => {
       minimizer: [
         `...`,
         new CssMinimizerPlugin(),
+        new TerserPlugin(),
       ],
     },
     devServer: {
-      static: {
-        directory: path.join(__dirname, 'public'),
-      },
+      static: path.join(__dirname, 'public'),
       compress: true,
       port: 3000,
       hot: true,
@@ -188,7 +179,7 @@ module.exports = (env, argv) => {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-        "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+        "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization",
       },
     },
     resolve: {
@@ -197,5 +188,6 @@ module.exports = (env, argv) => {
         'react-dom': 'preact/compat',
       },
     },
+    devtool: isProduction ? 'source-map' : 'cheap-module-source-map',
   };
 };
