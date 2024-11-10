@@ -9,7 +9,6 @@
     "analyze": "webpack --mode production --env analyze"
   },
   "dependencies": {
-    "penthouse": "^2.3.3",
     "preact": "^10.5.15"
   },
   "devDependencies": {
